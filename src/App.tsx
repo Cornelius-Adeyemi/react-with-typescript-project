@@ -40,6 +40,9 @@ function List(props:listProps):JSX.Element{
 
 
 class Details extends React.Component<propsType, detailsState>{
+  name!: HTMLInputElement | null;
+  age!: HTMLInputElement | null;
+  details!: HTMLTextAreaElement | null;
   constructor(props:propsType){
     super(props);
     this.state  = {name:"", age:"",url:"",details:"",
@@ -49,6 +52,7 @@ class Details extends React.Component<propsType, detailsState>{
     this.onclickHandler= this.onclickHandler.bind(this);
     this.errorHandler = this.errorHandler.bind(this);
     this.blurHandler = this.blurHandler.bind(this);
+    this.colorHandler = this.colorHandler.bind(this);
   }
 
   onchangeHandler(e:React.ChangeEvent<HTMLInputElement |HTMLTextAreaElement>){
@@ -101,7 +105,48 @@ blurHandler(e:React.FocusEvent<HTMLInputElement|HTMLTextAreaElement, Element> | 
  }
 }
 
-  render(): React.ReactNode {
+colorHandler(prevState:detailsState){
+  const error = this.errorHandler();
+  // for name
+  if(error.name !=="" && prevState.inputBool.name){
+      this.name!.style.outlineColor = "red"
+
+  }else{
+    this.name!.style.outlineColor="black"
+  }  
+
+  // for age
+  if(error.age !=="" && prevState.inputBool.age){
+    this.age!.style.outlineColor = "red"
+
+}else{
+  this.age!.style.outlineColor="black"
+}
+
+//for details
+if(error.details !=="" && prevState.inputBool.details){
+  this.details!.style.outlineColor = "red"
+
+}else{
+this.details!.style.outlineColor="black"
+} 
+
+
+}
+
+
+componentDidUpdate(prevProps:propsType, prevState:detailsState){
+
+  //console.log(this.state.name)
+ 
+this.colorHandler(this.state);
+  
+
+}
+
+
+
+render(): React.ReactNode {
 
       const error = this.errorHandler()
       
@@ -115,7 +160,7 @@ blurHandler(e:React.FocusEvent<HTMLInputElement|HTMLTextAreaElement, Element> | 
           return false;
         }
       }
-
+      
       return (<div>
         <h2> People Invited To My Party </h2>
 
@@ -124,13 +169,13 @@ blurHandler(e:React.FocusEvent<HTMLInputElement|HTMLTextAreaElement, Element> | 
 
         <div className='form-div'>
           <form onSubmit={(e)=>{return(validation(e))}} >
-            <input type="text" value={this.state.name} placeholder="Name" name="name" onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler} />
+            <input ref={(element)=>this.name=element} type="text" value={this.state.name} placeholder="Name" name="name" onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler} />
             <div id='error-p'>{error.name}</div>
-            <input type="number" value={this.state.age} placeholder="Age" name='age'onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler} />
+            <input type="number" ref={(element)=>this.age=element} value={this.state.age} placeholder="Age" name='age'onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler} />
             <div id='error-p'>{error.age}</div>
             <input type="text" value={this.state.url} placeholder="Enter url" name='url' onChange={this.onchangeHandler}  />
             
-            <textarea value={this.state.details} placeholder='Enter' name='details' onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler}/>
+            <textarea value={this.state.details} ref={(element)=>this.details=element} placeholder='Enter' name='details' onChange={(e)=>{this.onchangeHandler(e);this.blurHandler(e)}} onBlur={this.blurHandler}/>
             <div id='error-p'>{error.details}</div>
             <button type='submit' className='button-class'  >Add to List</button>
 
