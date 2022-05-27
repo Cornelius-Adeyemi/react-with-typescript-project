@@ -3,7 +3,6 @@ import React from 'react';
 import './App.css';
 
 
-const ronaldo = "https://www.cristianoronaldo.com/assets/images/brand_eyewear.jpg?832236"
 interface propsType {};
 
 interface listProps {
