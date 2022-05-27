@@ -27,7 +27,7 @@ function List(props:listProps):JSX.Element{
        <ul>
          {props.list.map((item,index)=>{
            return( <li key={index}>
-             <div className='list-map'> <div className='image-name'> <div className='image-div'><img src={item.url}/></div><h4>{item.name}</h4> </div> 
+             <div className='list-map'> <div className='image-name'> <div className='image-div'><img src={item.url} alt={item.name} /></div><h4>{item.name}</h4> </div> 
                    <div className='age-detail'> <h5>{`${item.age} years old`}</h5> </div> 
                    <div className='age-detail'> <h5>{item.details}</h5></div>
              </div>
